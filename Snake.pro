@@ -19,6 +19,7 @@ SOURCES += \
     data.cpp \
     main.cpp \
     mainwindow.cpp \
+    overview.cpp \
     widget/game/fieldview.cpp \
     widget/game/food.cpp \
     widget/game/game.cpp \
@@ -31,6 +32,7 @@ HEADERS += \
     SnakeEnum.h \
     data.h \
     mainwindow.h \
+    overview.h \
     widget/game/fieldview.h \
     widget/game/food.h \
     widget/game/game.h \

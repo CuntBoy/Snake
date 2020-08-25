@@ -6,5 +6,6 @@
         <file>pic/body.png</file>
         <file>pic/head.jpg</file>
         <file>pic/tial.png</file>
+        <file>pic/gameover.jpg</file>
     </qresource>
 </RCC>

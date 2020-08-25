@@ -35,6 +35,16 @@ QPixmap * Food::draw()
     return pixmap_;
 }
 
+void Food::update(const QList<QPoint> & list)
+{
+    srand(time(NULL));
+    int index = rand() % list.length();
+//    list.removeOne(this->getpos());
+    this->setpos(list[index]);
+
+
+}
+
 Food::~Food()
 {
     delete pixmap_;

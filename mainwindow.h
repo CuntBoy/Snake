@@ -7,6 +7,8 @@ class Widget;
 class MainWindow : public QMainWindow
 {
     Q_OBJECT
+public slots:
+    void startSlot();
 
 public:
     MainWindow(QWidget *parent = nullptr);

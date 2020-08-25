@@ -56,6 +56,16 @@ void Widget::keyPressEvent(QKeyEvent *event)
     case Qt::Key_Right:
         game_->TurnTo(SD::Right);
         break;
+    case Qt::Key_Space:
+        if(Data::instance()->getStatus() == GT::Running)
+        {
+            Data::instance()->setStatus(GT::Pause);
+        }else
+        {
+            Data::instance()->setStatus(GT::Running);
+            emit drawFieldSignal();
+        }
+
     default:
         break;
     }

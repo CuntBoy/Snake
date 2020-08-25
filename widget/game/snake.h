@@ -24,10 +24,12 @@ public:
 
     void init();
     QPixmap *draw();
-    void move();
+    bool move();
     void TurnTo(SD::SnakeDirection direct);
     void addItem();
     QPoint nextHead();
+    void reset();
+    QList<QPoint> remainPos();
 private:
     QList<SnakeItem> list_;
     QPixmap * pixmap_;

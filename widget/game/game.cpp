@@ -8,6 +8,9 @@
 #include "snake.h"
 #include "SnakeEnum.h"
 #include <QDebug>
+#include "overview.h"
+
+
 bool flag = true;
 
 Game::Game(QPixmap * pixmap,QObject *parent)
@@ -16,6 +19,7 @@ Game::Game(QPixmap * pixmap,QObject *parent)
     startview_ = new StartView;
     field_ = new FieldView;
     food_ = new Food;
+    overview = new OverView;
     snake = new Snake;
 }
 
@@ -38,6 +42,7 @@ void Game::drawFieldViewSlot()
     painter.begin(pixmap_);
     painter.drawPixmap(0,0,*(field_->getpixmap()));
     painter.end();
+    emit finish();
 }
 
 // 绘制一帧
@@ -47,13 +52,16 @@ void Game::drawOneFrame()
     drawFieldViewSlot();
     QPainter painter;
     painter.begin(pixmap_);
-    // 场景
-    painter.drawPixmap(0,0,*(field_->getpixmap()));
+//    // 场景
+//    painter.drawPixmap(0,0,*(field_->getpixmap()));
     // 食物
     painter.drawPixmap(0,0,*(food_->draw()));
 
     // 绘制蛇
     painter.drawPixmap(0,0,*(snake->draw()));
+
+    // game over
+
     painter.end();
     emit finish();
 }
@@ -75,11 +83,28 @@ void Game::gameUpdate()
     if(food_->getpos() == snake->nextHead())
     {
         snake->addItem();
-        this->food_->update();
+        food_->update(snake->remainPos());
+//        this->food_->update();
     }else
     {
-        snake->move();
+        bool ret = snake->move();
+        if(!ret)
+        {
+            Data::instance()->setStatus(GT::Over);
+            drawOneFrame();
+            drawOverView();
+            snake->remainPos();
+        }
     }
+}
+
+void Game::drawOverView()
+{
+    QPainter painter;
+    painter.begin(pixmap_);
+    painter.drawPixmap(0,0,*(overview->pixmap()));
+    painter.end();
+    emit finish();
 }
 
 
@@ -88,19 +113,26 @@ void Game::gameUpdate()
 // 动画
 void Game::drawGameSlot()
 {
-    this->food_->update();
+    if(Data::instance()->getStatus() == GT::Over || Data::instance()->getStatus() == GT::Start)
+    {
+        snake->reset();
+        food_->update(snake->remainPos());
+        snakedirect = SD::Right;
+    }
+
     Data::instance()->setStatus(GT::Running);
+
     while(Data::instance()->getStatus() == GT::Running)
     {
         drawOneFrame();
-        QThread::msleep(1000);
-//        snake->TurnTo(snakedirect);
-//        snake->move();
+        QThread::msleep(200);
         gameUpdate();
-//        flag = true;
     }
 
 }
+
+
+
 
 
 Game::~Game()
@@ -109,11 +141,13 @@ Game::~Game()
     delete field_;
     delete food_;
     delete snake;
+    delete overview;
 
     startview_ = nullptr;
     field_ = nullptr;
     food_ = nullptr;
     snake = nullptr;
+    overview = nullptr;
 }
 
 

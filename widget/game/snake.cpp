@@ -4,6 +4,7 @@
 #include <QPixmap>
 #include <QPainter>
 #include <QTransform>
+#include <QDebug>
 
 Snake::Snake()
 {
@@ -64,7 +65,6 @@ QPixmap * Snake::draw()
         switch(item.gettype())
         {
         case IType::SnakeHead:
-            //            painter.drawPixmap(item.getpos(),*(pixhead_));
             painter.drawPixmap(item.getpos(),rotate(pixhead_,item.getDirection()));
             break;
         case IType::SnakeBody:
@@ -75,7 +75,6 @@ QPixmap * Snake::draw()
             break;
         }
     }
-
     painter.end();
     return pixmap_;
 
@@ -83,25 +82,38 @@ QPixmap * Snake::draw()
 
 // 蛇移动
 // 舌头的范围 0-cellsize * column
-void Snake::move()
+bool Snake::move()
 {
     QPoint nextpos = nextHead();
+    QList<SnakeItem> list = list_;
+    // 判断下一个位置是否会跑出场景
     if(nextpos.x() < 0
             || nextpos.x()>= Data::instance()->getcellsize()*Data::instance()->getcolumn()
             || nextpos.y()<0
             || nextpos.y() >= Data::instance()->getcellsize()*Data::instance()->getrow())
     {
         qDebug()<<"game over"<<endl;
-        Data::instance()->setStatus(GT::Over);
-        return;
+//        Data::instance()->setStatus(GT::Over);
+        return false;
     }
-    for(int i = list_.length()-1; i > 0; i--)
+    // 计算下一个位置
+    for(int i = list.length()-1; i > 0; i--)
     {
-        list_[i].setpos(list_[i-1].getpos());
-        list_[i].setDirection(list_[i-1].getDirection());
+        list[i].setpos(list[i-1].getpos());
+        list[i].setDirection(list[i-1].getDirection());
     }
-    list_[0].setpos(nextpos);
+    list[0].setpos(nextpos);
 
+    // 判断蛇头和身体是否重叠
+    for(int i = 4; i < list.length();i++)
+    {
+        if(list[i].getpos() == list[0].getpos())
+        {
+            return false;
+        }
+    }
+    list_ = list;
+    return true;
 
 }
 
@@ -111,35 +123,35 @@ void Snake::TurnTo(SD::SnakeDirection direct)
     {
         list_[0].setDirection(direct);
     }
-//    switch (direct) {
-//    case SD::Up:
-//        if(list_[0].getDirection() != SD::Down)
-//        {
-//            list_[0].setDirection(direct);
-//        }
-//        break;
-//    case SD::Down:
-//        if(list_[0].getDirection() != SD::Up)
-//        {
-//            list_[0].setDirection(direct);
-//        }
-//        break;
-//    case SD::Left:
-//        if(list_[0].getDirection() != SD::Right)
-//        {
-//            list_[0].setDirection(direct);
-//        }
-//        break;
-//    case SD::Right:
-//        if(list_[0].getDirection() != SD::Left)
-//        {
-//            list_[0].setDirection(direct);
-//        }
-//        break;
-//    default:
-//        break;
-//    }
-//    list_[0].setDirection(direct);
+    //    switch (direct) {
+    //    case SD::Up:
+    //        if(list_[0].getDirection() != SD::Down)
+    //        {
+    //            list_[0].setDirection(direct);
+    //        }
+    //        break;
+    //    case SD::Down:
+    //        if(list_[0].getDirection() != SD::Up)
+    //        {
+    //            list_[0].setDirection(direct);
+    //        }
+    //        break;
+    //    case SD::Left:
+    //        if(list_[0].getDirection() != SD::Right)
+    //        {
+    //            list_[0].setDirection(direct);
+    //        }
+    //        break;
+    //    case SD::Right:
+    //        if(list_[0].getDirection() != SD::Left)
+    //        {
+    //            list_[0].setDirection(direct);
+    //        }
+    //        break;
+    //    default:
+    //        break;
+    //    }
+    //    list_[0].setDirection(direct);
 }
 
 // 获取下一个蛇头的位置
@@ -166,6 +178,39 @@ QPoint Snake::nextHead()
         break;
     }
     return nextPos;
+}
+
+void Snake::reset()
+{
+    list_.clear();
+    init();
+
+}
+
+QList<QPoint> Snake::remainPos()
+{
+    QList<QPoint> list;
+    int row = Data::instance()->getrow();
+    int column = Data::instance()->getcolumn();
+    int cellWidth = Data::instance()->getcellsize();
+    int j = 0;
+
+    for(int i = 0; i <column;i++)
+    {
+        for( j = 0; i <row;j++)
+        {
+            list.push_back(QPoint(i*cellWidth,j*cellWidth));
+        }
+
+    }
+
+    foreach (SnakeItem item, list_) {
+        list.removeOne(item.getpos());
+        qDebug()<<"removeOne"<<endl;
+    }
+
+    qDebug()<<list;
+    return list;
 }
 
 //添加身体 长长

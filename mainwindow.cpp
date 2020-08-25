@@ -3,6 +3,12 @@
 #include <QMenuBar>
 #include "data.h"
 
+void MainWindow::startSlot()
+{
+    if(Data::instance()->getStatus() != GT::Running)
+        emit widget_->drawFieldSignal();
+}
+
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
 {
@@ -18,7 +24,7 @@ MainWindow::MainWindow(QWidget *parent)
 void MainWindow::initMenu()
 {
     QMenu * menu = this->menuBar()->addMenu("Game(&G)");
-    menu->addAction("Start(&S)",widget_,SIGNAL(drawFieldSignal()));
+    menu->addAction("Start(&S)",this,SLOT(startSlot()));
 }
 
 

@@ -4,10 +4,12 @@
 #include <QObject>
 #include <QPixmap>
 #include "SnakeEnum.h"
+#include "overview.h"
 
 class FieldView;
 class StartView;
 class Food;
+class OverView;
 class Snake;
 class Game : public QObject
 {
@@ -26,6 +28,7 @@ public slots:
     void drawGameSlot();
     void TurnTo(SD::SnakeDirection direct);
     void gameUpdate();
+    void drawOverView();
 
 
 
@@ -35,6 +38,7 @@ private:
     FieldView * field_;
     Food * food_;
     Snake * snake;
+    OverView * overview;
     SD::SnakeDirection snakedirect;
 };
 
