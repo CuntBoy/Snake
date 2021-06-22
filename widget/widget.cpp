@@ -9,13 +9,9 @@
 
 Widget::Widget(QWidget *parent) : QWidget(parent)
 {
-
     this->setFixedSize(Data::instance()->getsize());
     this->setFocus();
-//    QWidget::setFocusProxy(this);
-
     pixmap_ = new QPixmap(this->size());
-
     game_ = new Game(pixmap_);
     thread_ = new QThread(this);
     game_->moveToThread(thread_);
@@ -23,7 +19,7 @@ Widget::Widget(QWidget *parent) : QWidget(parent)
     connect(thread_,SIGNAL(started()),game_,SLOT(drawStartSlot()));
     connect(thread_,SIGNAL(finished()),game_,SLOT(deleteLater()));
     connect(game_,SIGNAL(finish()),this,SLOT(update()));
-    //    connect(this,SIGNAL(drawFieldSignal()),game_,SLOT(drawFieldViewSlot())); //drawOneFrame drawGameSlot
+    connect(this,SIGNAL(drawFieldSignal()),game_,SLOT(drawFieldViewSlot())); //drawOneFrame drawGameSlot
     connect(this,SIGNAL(drawFieldSignal()),game_,SLOT(drawGameSlot()));
 
     thread_->start();
@@ -73,6 +69,7 @@ void Widget::keyPressEvent(QKeyEvent *event)
 
 //    qDebug()<<__FUNCTION__<<endl;
 }
+
 Widget::~Widget()
 {
     thread_->quit();

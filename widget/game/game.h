@@ -18,9 +18,9 @@ public:
     explicit Game(QPixmap *pixmap, QObject *parent = nullptr);
     ~Game();
 
-
 signals:
     void finish();
+
 public slots:
     void drawStartSlot();
     void drawFieldViewSlot();

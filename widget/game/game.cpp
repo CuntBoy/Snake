@@ -14,7 +14,7 @@
 bool flag = true;
 
 Game::Game(QPixmap * pixmap,QObject *parent)
-    : QObject(parent),pixmap_(pixmap),snakedirect(SD::Right)
+    : QObject(parent),pixmap_(pixmap),snakedirect(SD::Right) //默认朝向 向右
 {
     startview_ = new StartView;
     field_ = new FieldView;
@@ -107,9 +107,6 @@ void Game::drawOverView()
     emit finish();
 }
 
-
-
-
 // 动画
 void Game::drawGameSlot()
 {
@@ -130,9 +127,6 @@ void Game::drawGameSlot()
     }
 
 }
-
-
-
 
 
 Game::~Game()
