@@ -8,7 +8,6 @@ OverView::OverView()
     *pixmap_ = pixmap_->scaled(Data::instance()->getsize(),Qt::IgnoreAspectRatio,Qt::SmoothTransformation);
 }
 
-
 OverView::~OverView()
 {
     delete pixmap_;

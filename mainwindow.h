@@ -7,16 +7,16 @@ class Widget;
 class MainWindow : public QMainWindow
 {
     Q_OBJECT
-public slots:
-    void startSlot();
-
 public:
     MainWindow(QWidget *parent = nullptr);
     ~MainWindow();
 private:
-    void initMenu();
+    void initMenu();  //初始化菜单
 
 private:
-    Widget *widget_;
+    Widget *widget_;   // center widget
+
+public slots:
+    void startSlot(); // start
 };
 #endif // MAINWINDOW_H
