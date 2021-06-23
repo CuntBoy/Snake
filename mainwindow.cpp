@@ -25,7 +25,7 @@ MainWindow::MainWindow(QWidget *parent)
 void MainWindow::initMenu()
 {
     QMenu * menu = this->menuBar()->addMenu("Game(&G)");
-    menu->addAction("Start(&S)",this,SLOT(startSlot()));
+    menu->addAction("Start(&S)",this,SLOT(startSlot()));   // start Action
 }
 
 

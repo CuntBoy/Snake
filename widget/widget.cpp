@@ -20,7 +20,7 @@ Widget::Widget(QWidget *parent) : QWidget(parent)
     connect(thread_,SIGNAL(finished()),game_,SLOT(deleteLater()));
     connect(game_,SIGNAL(finish()),this,SLOT(update()));
     connect(this,SIGNAL(drawFieldSignal()),game_,SLOT(drawFieldViewSlot())); //drawOneFrame drawGameSlot
-    connect(this,SIGNAL(drawFieldSignal()),game_,SLOT(drawGameSlot()));
+    connect(this,SIGNAL(drawFieldSignal()),game_,SLOT(drawGameSlot()));      // 绘制游戏的当前场景
 
     thread_->start();
 }
@@ -72,6 +72,7 @@ void Widget::keyPressEvent(QKeyEvent *event)
 
 Widget::~Widget()
 {
+    // 退出线程
     thread_->quit();
     thread_->wait();
 
