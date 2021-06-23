@@ -37,7 +37,8 @@ void Widget::paintEvent(QPaintEvent *event)
 
 void Widget::keyPressEvent(QKeyEvent *event)
 {
-    qDebug()<<__FUNCTION__<<endl;
+
+//    qDebug()<<__FUNCTION__<<endl;
 
     switch (event->key()) {
     case Qt::Key_Up:
@@ -72,6 +73,7 @@ void Widget::keyPressEvent(QKeyEvent *event)
 
 Widget::~Widget()
 {
+    // 等待线程推出 -- 然后才调用删除
     thread_->quit();
     thread_->wait();
 

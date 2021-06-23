@@ -48,12 +48,12 @@ void Game::drawFieldViewSlot()
 // 绘制一帧
 void Game::drawOneFrame()
 {
-
-    drawFieldViewSlot();
+    drawFieldViewSlot();  //  游戏场景
     QPainter painter;
     painter.begin(pixmap_);
-//    // 场景
-//    painter.drawPixmap(0,0,*(field_->getpixmap()));
+    // 场景
+    // painter.drawPixmap(0,0,*(field_->getpixmap()));
+
     // 食物
     painter.drawPixmap(0,0,*(food_->draw()));
 
@@ -61,31 +61,33 @@ void Game::drawOneFrame()
     painter.drawPixmap(0,0,*(snake->draw()));
 
     // game over
-
     painter.end();
     emit finish();
 }
 
 void Game::TurnTo(SD::SnakeDirection direct)
 {
-    qDebug()<<__FUNCTION__<<endl;
+//    qDebug()<<__FUNCTION__<<endl;
 //    if(flag)
 //        snake->TurnTo(direct);
 //    flag = false;
-    snakedirect = direct;
 
+    // 设置蛇转向
+    snakedirect = direct;
 }
 
 // 更新数据
 void Game::gameUpdate()
 {
     snake->TurnTo(snakedirect);
+
     if(food_->getpos() == snake->nextHead())
     {
         snake->addItem();
         food_->update(snake->remainPos());
 //        this->food_->update();
-    }else
+    }
+    else
     {
         bool ret = snake->move();
         if(!ret)
@@ -127,7 +129,6 @@ void Game::drawGameSlot()
     }
 
 }
-
 
 Game::~Game()
 {
