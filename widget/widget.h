@@ -14,6 +14,7 @@ public:
     ~Widget();
 signals:
     void drawFieldSignal();
+    void drawStartView();
 private:
     QPixmap * pixmap_;
     Game * game_;

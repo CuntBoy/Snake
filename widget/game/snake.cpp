@@ -84,24 +84,25 @@ QPixmap * Snake::draw()
 // 舌头的范围 0-cellsize * column
 bool Snake::move()
 {
-    QPoint nextpos = nextHead();
-    QList<SnakeItem> list = list_;
+    QPoint nextpos = nextHead();   // 获取下一个位置
+    QList<SnakeItem> list = list_; // 获取蛇的身体
+
     // 判断下一个位置是否会跑出场景
     if(nextpos.x() < 0
             || nextpos.x()>= Data::instance()->getcellsize()*Data::instance()->getcolumn()
             || nextpos.y()<0
             || nextpos.y() >= Data::instance()->getcellsize()*Data::instance()->getrow())
     {
-        qDebug()<<"game over"<<endl;
-//        Data::instance()->setStatus(GT::Over);
+        // Data::instance()->setStatus(GT::Over);
         return false;
     }
     // 计算下一个位置
     for(int i = list.length()-1; i > 0; i--)
     {
-        list[i].setpos(list[i-1].getpos());
-        list[i].setDirection(list[i-1].getDirection());
+        list[i].setpos(list[i-1].getpos());  // 每一个的位置变成下一个元素的位置
+        list[i].setDirection(list[i-1].getDirection());  // 每一个的方向变成下一个的方向
     }
+    // 将头的位置设置为下一个的位置
     list[0].setpos(nextpos);
 
     // 判断蛇头和身体是否重叠
@@ -114,7 +115,6 @@ bool Snake::move()
     }
     list_ = list;
     return true;
-
 }
 
 void Snake::TurnTo(SD::SnakeDirection direct)
@@ -193,27 +193,30 @@ QList<QPoint> Snake::remainPos()
     int row = Data::instance()->getrow();
     int column = Data::instance()->getcolumn();
     int cellWidth = Data::instance()->getcellsize();
-    int j = 0;
 
+    // 存储所有的位置
     for(int i = 0; i <column;i++)
     {
-        for( j = 0; i <row;j++)
+        for(auto j = 0; j <row;j++)
         {
             list.push_back(QPoint(i*cellWidth,j*cellWidth));
         }
 
     }
 
-    foreach (SnakeItem item, list_) {
+    // 将蛇的部分从中移除
+    foreach (SnakeItem item, list_)
+    {
         list.removeOne(item.getpos());
-        qDebug()<<"removeOne"<<endl;
     }
 
+#if _DEBUG
     qDebug()<<list;
+#endif
     return list;
 }
 
-//添加身体 长长
+//添加身体 长长 --吃了食物之后
 void Snake::addItem()
 {
     SnakeItem newHead = list_[0];

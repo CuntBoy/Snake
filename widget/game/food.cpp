@@ -25,7 +25,6 @@ void Food::update()
 
 QPixmap * Food::draw()
 {
-//    this->update();
     pixmap_->fill(QColor("#00000000"));
     QPainter painter;
     painter.begin(pixmap_);
@@ -39,10 +38,8 @@ void Food::update(const QList<QPoint> & list)
 {
     srand(time(NULL));
     int index = rand() % list.length();
-//    list.removeOne(this->getpos());
+    //list.removeOne(this->getpos());
     this->setpos(list[index]);
-
-
 }
 
 Food::~Food()

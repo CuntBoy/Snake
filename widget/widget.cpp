@@ -17,6 +17,8 @@ Widget::Widget(QWidget *parent) : QWidget(parent)
     game_->moveToThread(thread_);
 
     connect(thread_,SIGNAL(started()),game_,SLOT(drawStartSlot()));
+    connect(this,&Widget::drawStartView,game_,&Game::drawStartSlot);
+
     connect(thread_,SIGNAL(finished()),game_,SLOT(deleteLater()));
     connect(game_,SIGNAL(finish()),this,SLOT(update()));
     connect(this,SIGNAL(drawFieldSignal()),game_,SLOT(drawFieldViewSlot())); //drawOneFrame drawGameSlot
@@ -57,7 +59,14 @@ void Widget::keyPressEvent(QKeyEvent *event)
         if(Data::instance()->getStatus() == GT::Running)
         {
             Data::instance()->setStatus(GT::Pause);
-        }else
+        }
+        else if(Data::instance()->getStatus() == GT::Over)
+        {
+            Data::instance()->setStatus(GT::Start);
+            //emit drawFieldSignal();
+            emit drawStartView();
+        }
+        else
         {
             Data::instance()->setStatus(GT::Running);
             emit drawFieldSignal();

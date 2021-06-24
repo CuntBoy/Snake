@@ -13,13 +13,14 @@ MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
 {
     widget_ = new Widget(this);
-    initMenu();
+
     this->setCentralWidget(widget_);
 
     //    w->resize(this->size());
     widget_->resize(Data::instance()->getsize());
     widget_->setFixedSize(Data::instance()->getsize());
-    this->setFixedSize(Data::instance()->getsize());
+    //this->setFixedSize(Data::instance()->getsize());
+    initMenu();
 }
 
 void MainWindow::initMenu()
