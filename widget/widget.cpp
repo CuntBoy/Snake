@@ -82,7 +82,7 @@ void Widget::keyPressEvent(QKeyEvent *event)
 
 Widget::~Widget()
 {
-    // 等待线程推出 -- 然后才调用删除
+    // 等待线程退出 -- 然后才调用删除
     thread_->quit();
     thread_->wait();
 

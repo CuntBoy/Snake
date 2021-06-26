@@ -93,7 +93,7 @@ bool Snake::move()
             || nextpos.y()<0
             || nextpos.y() >= Data::instance()->getcellsize()*Data::instance()->getrow())
     {
-        // Data::instance()->setStatus(GT::Over);
+        Data::instance()->setStatus(GT::Over);
         return false;
     }
     // 计算下一个位置
