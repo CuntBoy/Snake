@@ -59,6 +59,7 @@ QPixmap Snake::rotate(QPixmap * pixmap,SD::SnakeDirection direct)
 QPixmap * Snake::draw()
 {
     QPainter painter;
+    pixmap_->fill(QColor("#00000000"));   // 将颜色设置为空
     painter.begin(pixmap_);
     foreach (SnakeItem item, list_)
     {
@@ -102,6 +103,7 @@ bool Snake::move()
         list[i].setpos(list[i-1].getpos());  // 每一个的位置变成下一个元素的位置
         list[i].setDirection(list[i-1].getDirection());  // 每一个的方向变成下一个的方向
     }
+
     // 将头的位置设置为下一个的位置
     list[0].setpos(nextpos);
 

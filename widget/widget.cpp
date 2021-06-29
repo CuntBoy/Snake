@@ -39,9 +39,6 @@ void Widget::paintEvent(QPaintEvent *event)
 
 void Widget::keyPressEvent(QKeyEvent *event)
 {
-
-//    qDebug()<<__FUNCTION__<<endl;
-
     switch (event->key()) {
     case Qt::Key_Up:
         game_->TurnTo(SD::Up);
@@ -63,7 +60,7 @@ void Widget::keyPressEvent(QKeyEvent *event)
         else if(Data::instance()->getStatus() == GT::Over)
         {
             Data::instance()->setStatus(GT::Start);
-            //emit drawFieldSignal();
+            emit drawFieldSignal();
             emit drawStartView();
         }
         else

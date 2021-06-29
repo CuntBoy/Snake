@@ -29,7 +29,6 @@ QPixmap * Food::draw()
     QPainter painter;
     painter.begin(pixmap_);
     painter.drawPixmap(this->getpos(),*foodpix_);
-
     painter.end();
     return pixmap_;
 }

@@ -42,6 +42,7 @@ void Game::drawFieldViewSlot()
     painter.begin(pixmap_);
     painter.drawPixmap(0,0,*(field_->getpixmap()));
     painter.end();
+
     emit finish();
 }
 
@@ -82,8 +83,8 @@ void Game::gameUpdate()
     // 判断食物 是不是被吃掉
     if(food_->getpos() == snake->nextHead())
     {
-        snake->addItem();
-        food_->update(snake->remainPos());
+        snake->addItem();   // 添加一节身体
+        food_->update(snake->remainPos());   // 重新计算一个　食物的位置
     }
     else
     {
@@ -128,7 +129,7 @@ void Game::drawGameSlot()
     while(Data::instance()->getStatus() == GT::Running)
     {
         drawOneFrame();
-        QThread::msleep(200);
+        QThread::msleep(200); // default 200
         gameUpdate();
     }
 
