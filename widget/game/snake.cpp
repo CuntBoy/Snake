@@ -97,6 +97,15 @@ bool Snake::move()
         Data::instance()->setStatus(GT::Over);
         return false;
     }
+
+    for(auto i = 1;i < list.length();i++)
+    {
+        if(nextpos == list[i].getpos())
+        {
+            return false;
+        }
+    }
+
     // 计算下一个位置
     for(int i = list.length()-1; i > 0; i--)
     {

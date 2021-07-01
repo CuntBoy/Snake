@@ -24,6 +24,9 @@ Widget::Widget(QWidget *parent) : QWidget(parent)
     connect(this,SIGNAL(drawFieldSignal()),game_,SLOT(drawFieldViewSlot())); //drawOneFrame drawGameSlot
     connect(this,SIGNAL(drawFieldSignal()),game_,SLOT(drawGameSlot()));
 
+    connect(this,SIGNAL(reinitlizedSnak()),game_,SLOT(OnUpdateSnake()));
+
+
     thread_->start();
 }
 
@@ -60,11 +63,17 @@ void Widget::keyPressEvent(QKeyEvent *event)
         else if(Data::instance()->getStatus() == GT::Over)
         {
             Data::instance()->setStatus(GT::Start);
-            emit drawFieldSignal();
+            //emit drawFieldSignal();
+            emit reinitlizedSnak();
             emit drawStartView();
         }
         else
         {
+            if(Data::instance()->getStatus() == GT::Start)
+            {
+                emit reinitlizedSnak();
+            }
+
             Data::instance()->setStatus(GT::Running);
             emit drawFieldSignal();
         }
@@ -73,8 +82,6 @@ void Widget::keyPressEvent(QKeyEvent *event)
         break;
     }
 
-
-//    qDebug()<<__FUNCTION__<<endl;
 }
 
 Widget::~Widget()

@@ -29,7 +29,7 @@ public slots:
     void TurnTo(SD::SnakeDirection direct);
     void gameUpdate();
     void drawOverView();
-
+    void OnUpdateSnake();
 
 
 private:

@@ -71,6 +71,7 @@ void Game::drawOneFrame()
 void Game::TurnTo(SD::SnakeDirection direct)
 {
     // 设置蛇转向
+    //if(snakedirect == )
     snakedirect = direct;
 }
 
@@ -92,10 +93,12 @@ void Game::gameUpdate()
         if(!ret)  //移动失败
         {
             // 设置游戏的状态
-            Data::instance()->setStatus(GT::Over);
+              Data::instance()->setStatus(GT::Over);
+
+              QThread::msleep(600);  //暂停一下 显示错误的操作
 
             // 重新绘制画面
-            drawOneFrame();
+            //drawOneFrame();
 
             // 绘制结束页面
             drawOverView();
@@ -112,6 +115,13 @@ void Game::drawOverView()
     painter.drawPixmap(0,0,*(overview->pixmap()));
     painter.end();
     emit finish();
+}
+
+void Game::OnUpdateSnake()
+{
+    snake->reset();
+    food_->update(snake->remainPos());
+    snakedirect = SD::Right;
 }
 
 // 动画

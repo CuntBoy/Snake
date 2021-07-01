@@ -15,6 +15,8 @@ public:
 signals:
     void drawFieldSignal();
     void drawStartView();
+    void reinitlizedSnak();
+
 private:
     QPixmap * pixmap_;
     Game * game_;
