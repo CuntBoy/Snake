@@ -12,7 +12,7 @@ Snake::Snake()
     pixmap_  = new QPixmap(Data::instance()->getsize()) ;
     pixmap_->fill(QColor("#00000000"));
     //    pixmap_->fill(QColor(Qt::white));
-    pixhead_ = new QPixmap(":pic/pic/head.jpg") ;
+    pixhead_ = new QPixmap(":pic/pic/head.png") ;
     pixbody_ = new QPixmap(":pic/pic/body.png") ;
     pixtail_ = new QPixmap(":pic/pic/tial.png") ;
     *pixhead_ = pixhead_->scaled(Data::instance()->cellSize(),Qt::IgnoreAspectRatio,Qt::SmoothTransformation);
