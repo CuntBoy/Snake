@@ -4,7 +4,7 @@
 
 StartView::StartView()
 {
-    pixmap_ = new QPixmap(":/pic/pic/main.jpg");
+    pixmap_ = new QPixmap(":/pic/pic/main.png");
     *pixmap_ = pixmap_->scaled(Data::instance()->getsize(),Qt::IgnoreAspectRatio,Qt::SmoothTransformation);
 }
 
