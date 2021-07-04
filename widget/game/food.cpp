@@ -7,7 +7,7 @@ Food::Food()
 {
     pixmap_ = new  QPixmap(Data::instance()->getsize());
     pixmap_->fill(QColor("#00000000"));
-    foodpix_ = new QPixmap(":pic/pic/food.jpg");
+    foodpix_ = new QPixmap(":pic/pic/food.png");
 
     *foodpix_ = foodpix_->scaled(Data::instance()->getcellsize(),Data::instance()->getcellsize(),
                                  Qt::IgnoreAspectRatio,Qt::SmoothTransformation);

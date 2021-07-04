@@ -2,7 +2,7 @@
 
 Data * Data::data_ = nullptr;
 Data::Data()
-    :cellSize_(50),row_(10),column_(10),gamestatus_(GT::Start)
+    :cellSize_(50),row_(15),column_(15),gamestatus_(GT::Start)
 {
 
 }

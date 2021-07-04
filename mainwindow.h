@@ -16,7 +16,12 @@ private:
 private:
     Widget *widget_;   // center widget
 
+protected:
+
+
 public slots:
     void startSlot(); // start
 };
+
+
 #endif // MAINWINDOW_H
