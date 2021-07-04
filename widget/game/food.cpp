@@ -20,7 +20,6 @@ void Food::update()
     int row = rand()%Data::instance()->getrow();
     int column = rand()%Data::instance()->getcolumn();
     this->setpos(QPoint(column*Data::instance()->getcellsize(),row*Data::instance()->getcellsize()));
-
 }
 
 QPixmap * Food::draw()

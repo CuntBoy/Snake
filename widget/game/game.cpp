@@ -70,9 +70,11 @@ void Game::drawOneFrame()
 
 void Game::TurnTo(SD::SnakeDirection direct)
 {
-    // 设置蛇转向
-    //if(snakedirect == )
-    snakedirect = direct;
+    // 不能朝着当前方向的反方向直接转向
+    if(!((direct + 2) % 4 == snakedirect))
+    {
+        snakedirect = direct;
+    }
 }
 
 // 更新数据
